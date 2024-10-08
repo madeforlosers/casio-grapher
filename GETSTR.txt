@@ -1,0 +1,8 @@
+T=1⟹Str 1→Str 9
+T=2⟹Str 2→Str 9
+T=3⟹Str 3→Str 9
+T=4⟹Str 4→Str 9
+T=5⟹Str 5→Str 9
+T=6⟹Str 6→Str 9
+T=7⟹Str 7→Str 9
+T=8⟹Str 8→Str 9
