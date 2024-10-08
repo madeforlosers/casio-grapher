@@ -1,0 +1,184 @@
+{1,2,0,0}→List 1
+S→U
+1→H
+1→S
+3→N
+Lbl E
+Locate 21,7,"."
+Locate 1,1,"GRAPHER"
+For 1→I To 20
+Locate I,2,"-"
+Next
+Locate 15,2,"f1=done"
+Lbl A
+3→F
+For N→I To N+4
+Locate 2,F,"Y ="
+Locate 3,F,I-2
+I-2→T
+Prog "GETSTR"
+For 5→J To 21
+Locate J,F," "
+Next
+Locate 5,F,Str 9
+F+1→F
+Next
+Locate 1,S+2,"→"
+Locate 21,7," "
+Do
+If Getkey
+Then Locate 21,7,"."
+Locate 1,S+2," "
+Getkey→G
+If G=31
+Then S+(N-3)→L
+Break
+IfEnd
+If G=79
+Then Goto S
+IfEnd
+S+(G=37)-(G=28)→S
+If S<1
+Then 7→N
+5→S
+Goto A
+IfEnd
+If S+2>7
+Then If N<6
+Then N+1→N
+S-1→S
+Goto A
+Else 1→S
+3→N
+Goto E
+IfEnd
+IfEnd
+Locate 1,S+2,"→"
+While Getkey
+WhileEnd
+IfEnd
+Locate 21,7," "
+LpWhile 1
+ClrText
+Locate 21,1,"."
+L=1⟹?→Str 1
+L=2⟹?→Str 2
+L=3⟹?→Str 3
+L=4⟹?→Str 4
+L=5⟹?→Str 5
+L=6⟹?→Str 6
+L=7⟹?→Str 7
+L=8⟹?→Str 8
+Goto E
+Lbl S
+Menu "OPTIONS","GRAPH",G,"DISPLAY SETUP",T,"LINE SETUP",L,"BACK",E
+Goto S
+Lbl G
+ClrGraph
+For 1→E To 125 Step List 1[3]
+For 1→T To List 1[2]
+E-63→O
+Prog "GETSTR"
+If StrCmp("×",Str 9)
+Then 32-(Int Exp(Str 9→K
+K<63 And K>0⟹PxlOn K,Int E
+IfEnd
+Next
+If List 1[1]
+Then PxlOn 32,Int E
+PxlOn Int (.5E)+1,63
+IfEnd
+Next
+1→S
+While 1
+S→O
+32-Int Exp(Str 1→Q
+Int O+64→R
+PxlChg Q-1,R
+PxlChg Q+1,R
+PxlChg Q,R+1
+PxlChg Q,R-1
+Text 1,1,S
+S→O
+Text 10,1,Exp(Str 1
+While Not Getkey
+WhileEnd
+If Getkey=31
+Then 1→S
+Goto E
+IfEnd
+S+(Getkey=27)-(Getkey=38)→S
+PxlChg Q-1,R
+PxlChg Q+1,R
+PxlChg Q,R+1
+PxlChg Q,R-1
+WhileEnd
+Goto G
+Lbl T
+1→S
+ClrText
+Locate 21,7,"."
+Locate 1,1,"DISPLAY SETUP"
+For 1→I To 20
+Locate I,2,"-"
+Next
+Locate 1,3,"→"
+Locate 2,3,"DISPLAY AXIS?"
+Locate 21,3,List 1[1]
+Locate 2,4,"STOP ATMP AT STR"
+Locate 21,4,List 1[2]
+Locate 2,5,"DONE"
+Locate 21,7," "
+While 1
+If Getkey
+Then Locate 21,7,"."
+Getkey→G
+If Getkey=31
+Then If S=3
+Then ClrText
+Goto E
+IfEnd
+?→List 1[S]
+Goto T
+IfEnd
+Locate 1,S+2," "
+MOD(S-(G=28)+(G=37)-1,3)+1→S
+Locate 1,S+2,"→"
+While Getkey
+WhileEnd
+Locate 21,7," "
+IfEnd
+WhileEnd
+Lbl L
+1→S
+ClrText
+Locate 21,7,"."
+Locate 1,1,"LINE SETUP"
+For 1→I To 20
+Locate I,2,"-"
+Next
+Locate 1,3,"→"
+Locate 2,3,"LINE STEP"
+Locate 21,3,List 1[3]
+Locate 2,4,"DONE"
+Locate 21,7," "
+While 1
+If Getkey
+Then Locate 21,7,"."
+Getkey→G
+If Getkey=31
+Then If S=2
+Then ClrText
+Goto E
+IfEnd
+?→List 1[S+2]
+Goto L
+IfEnd
+Locate 1,S+2," "
+MOD(S-(G=28)+(G=37)-1,2)+1→S
+Locate 1,S+2,"→"
+While Getkey
+Locate 21,7," "
+WhileEnd
+IfEnd
+WhileEnd
