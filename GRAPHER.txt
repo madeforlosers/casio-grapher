@@ -1,5 +1,6 @@
-{1,2,0,0}→List 1
-S→U
+"S+(G=37)-(G=28)"→fn1
+{1,8,1,0,0}→List 1
+8→U
 1→H
 1→S
 3→N
@@ -9,7 +10,7 @@ Locate 1,1,"GRAPHER"
 For 1→I To 20
 Locate I,2,"-"
 Next
-Locate 15,2,"f1=done"
+Locate 15,2,"f1=Done"
 Lbl A
 3→F
 For N→I To N+4
@@ -17,14 +18,16 @@ Locate 2,F,"Y ="
 Locate 3,F,I-2
 I-2→T
 Prog "GETSTR"
-For 5→J To 21
-Locate J,F," "
+For 2→J To 7
+Locate 2J,F,"   "
 Next
 Locate 5,F,Str 9
-F+1→F
+Isz F
 Next
 Locate 1,S+2,"→"
 Locate 21,7," "
+While Getkey
+WhileEnd
 Do
 If Getkey
 Then Locate 21,7,"."
@@ -34,25 +37,29 @@ If G=31
 Then S+(N-3)→L
 Break
 IfEnd
-If G=79
-Then Goto S
-IfEnd
-S+(G=37)-(G=28)→S
+G=44⟹Goto D
+G=79⟹Goto S
+fn1→S
 If S<1
-Then 7→N
+Then If N=3
+Then 6→N
 5→S
+Goto A
+IfEnd
+Dsz N
+Isz S
 Goto A
 IfEnd
 If S+2>7
 Then If N<6
-Then N+1→N
-S-1→S
+Then Isz N
+Dsz S
 Goto A
 Else 1→S
 3→N
 Goto E
 IfEnd
-IfEnd
+IfENd
 Locate 1,S+2,"→"
 While Getkey
 WhileEnd
@@ -71,7 +78,39 @@ L=7⟹?→Str 7
 L=8⟹?→Str 8
 Goto E
 Lbl S
-Menu "OPTIONS","GRAPH",G,"DISPLAY SETUP",T,"LINE SETUP",L,"BACK",E
+ClrText
+Locate 21,7,"."
+Locate 1,1,"OPTIONS"
+For 1→I To 20
+Locate I,2,"-"
+Next
+Locate 2,3,"GRAPH"
+Locate 2,4,"DISPLAY SETUP"
+Locate 2,5,"LINE SETUP"
+Locate 2,6,"BACK"
+1→S
+Locate 1,S+2,"→"
+Locate 21,7," "
+While 1
+If Getkey
+Then Locate 21,7,"."
+Getkey→G
+If G=31
+Then S=1⟹Goto G
+S=2⟹Goto T
+S=3⟹Goto L
+ClrText
+1→S
+Goto E
+IfEnd
+Locate 1,S+2," "
+MOD(fn1-1,4)+1→S
+Locate 1,S+2,"→"
+While Getkey
+WhileEnd
+Locate 21,7," "
+IfEnd
+WhileEnd
 Goto S
 Lbl G
 ClrGraph
@@ -80,7 +119,7 @@ For 1→T To List 1[2]
 E-63→O
 Prog "GETSTR"
 If StrCmp("×",Str 9)
-Then 32-(Int Exp(Str 9→K
+Then 32-(Int Exp(Str 9)→K
 K<63 And K>0⟹PxlOn K,Int E
 IfEnd
 Next
@@ -88,11 +127,12 @@ If List 1[1]
 Then PxlOn 32,Int E
 PxlOn Int (.5E)+1,63
 IfEnd
+Getkey=47⟹Goto C
 Next
 1→S
 While 1
 S→O
-32-Int Exp(Str 1→Q
+32-Int Exp(Str 1)→Q
 Int O+64→R
 PxlChg Q-1,R
 PxlChg Q+1,R
@@ -107,13 +147,20 @@ If Getkey=31
 Then 1→S
 Goto E
 IfEnd
-S+(Getkey=27)-(Getkey=38)→S
+S+(Getkey=27)-(Getkey=38→S
 PxlChg Q-1,R
 PxlChg Q+1,R
 PxlChg Q,R+1
 PxlChg Q,R-1
 WhileEnd
 Goto G
+Lbl C
+Text 1,1,"STOPPED."
+While Getkey≠31
+WhileEnd
+1→S
+ClrText
+Goto E
 Lbl T
 1→S
 ClrText
@@ -142,7 +189,7 @@ IfEnd
 Goto T
 IfEnd
 Locate 1,S+2," "
-MOD(S-(G=28)+(G=37)-1,3)+1→S
+MOD(fn1-1,3)+1→S
 Locate 1,S+2,"→"
 While Getkey
 WhileEnd
@@ -158,8 +205,8 @@ For 1→I To 20
 Locate I,2,"-"
 Next
 Locate 1,3,"→"
-Locate 2,3,"LINE STEP"
-Locate 21,3,List 1[3]
+Locate 2,3,"LINE STEP: "
+Locate 13,3,List 1[3]
 Locate 2,4,"DONE"
 Locate 21,7," "
 While 1
@@ -175,10 +222,51 @@ IfEnd
 Goto L
 IfEnd
 Locate 1,S+2," "
-MOD(S-(G=28)+(G=37)-1,2)+1→S
+MOD(fn1-1,2)+1→S
 Locate 1,S+2,"→"
 While Getkey
-Locate 21,7," "
 WhileEnd
+Locate 21,7," "
+IfEnd
+WhileEnd
+Lbl D
+ClrText
+Locate 21,7,"."
+Locate 1,1,"DELETE 𝐘 ?"
+Locate 9,1,S+(N-3)
+For 1→I To 20
+Locate I,2,"-"
+Next
+Locate 2,3,"NO"
+Locate 2,4,"YES"
+1→S
+Locate 1,S+2,"→"
+Locate 21,7," "
+While 1
+If Getkey
+Then Locate 21,7,"."
+Getkey→G
+If G=31
+Then If S=2
+Then S+(N-3)→T
+T=1⟹"×"→Str 1
+T=2⟹"×"→Str 2
+T=3⟹"×"→Str 3
+T=4⟹"×"→Str 4
+T=5⟹"×"→Str 5
+T=6⟹"×"→Str 6
+T=7⟹"×"→Str 7
+T=8⟹"×"→Str 8
+IfEnd
+1→S
+ClrText
+Goto E
+IfEnd
+Locate 1,S+2," "
+MOD(fn1-1,2)+1→S
+Locate 1,S+2,"→"
+While Getkey
+WhileEnd
+Locate 21,7," "
 IfEnd
 WhileEnd
